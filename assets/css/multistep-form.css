@@ -1,0 +1,771 @@
+/* =====================================
+   MY MULTISTEP FORM - COMPLETE STYLE
+===================================== */
+
+.mmf-container {
+  max-width: 90%;
+  width: 100%;
+  margin: 60px auto;
+  padding: 40px;
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.mmf-title {
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: 700;
+}
+
+/* =====================================
+   STEPS
+===================================== */
+
+.mmf-step {
+  display: none;
+  opacity: 0;
+  transform: translateX(30px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.mmf-step.is-active {
+  display: block;
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.mmf-step h3 {
+  text-align: center;
+}
+
+
+/* =====================================
+   FIELDS
+===================================== */
+
+.mmf-field {
+  margin-bottom: 20px;
+}
+
+.mmf-field label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 600;
+  font-size: 14px;
+}
+
+.mmf-field input,
+.mmf-field textarea,
+.mmf-field select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  background: #fafafa;
+}
+
+.mmf-field input:focus,
+.mmf-field textarea:focus,
+.mmf-field select:focus {
+  border-color: #ff4fa3;
+  box-shadow: 0 0 0 3px rgba(255,79,163,0.15);
+  outline: none;
+  background: #fff;
+}
+
+.mmf-field textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* =====================================
+   ROW
+===================================== */
+
+.mmf-row {
+  display: flex;
+  gap: 15px;
+}
+
+.mmf-row .mmf-field {
+  flex: 1;
+}
+
+/* =====================================
+   CHECKBOXES
+===================================== */
+
+.mmf-checks label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-size: 14px;
+}
+
+.mmf-checks input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  accent-color: #ff4fa3;
+}
+
+/* =====================================
+   NAVIGATION BUTTONS
+===================================== */
+
+.mmf-nav {
+  margin-top: 30px;
+  display: flex;
+  gap: 15px;
+  justify-content: space-between;
+}
+
+.mmf-btn {
+  padding: 12px 22px;
+  border-radius: 30px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  transition: all 0.25s ease;
+  min-width: 120px;
+}
+
+/* Back button */
+.mmf-prev {
+  background: #f3f3f3;
+  color: #333;
+}
+
+.mmf-prev:hover {
+  background: #e0e0e0;
+}
+
+/* Next / Submit button */
+.mmf-next,
+.mmf-submit {
+  background: linear-gradient(135deg, #ff4fa3, #ff7cc5);
+  color: #ffffff;
+}
+
+.mmf-next:hover,
+.mmf-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(255,79,163,0.3);
+}
+
+.mmf-btn:disabled {
+  background: #ccc !important;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+/* =====================================
+   SUMMARY
+===================================== */
+
+.mmf-summary ul {
+  padding-left: 20px;
+}
+
+.mmf-summary li {
+  margin-bottom: 6px;
+  font-size: 14px;
+}
+
+/* =====================================
+   RESPONSIVE
+===================================== */
+
+@media (max-width: 600px) {
+
+  .mmf-container {
+    padding: 25px;
+    margin: 30px 15px;
+  }
+
+  .mmf-row {
+    flex-direction: column;
+  }
+
+  .mmf-nav {
+    flex-direction: column;
+  }
+
+  .mmf-btn {
+    width: 100%;
+  }
+}
+
+/* =====================================
+   EVENT TYPE CIRCLES
+===================================== */
+
+.mmf-event-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 30px;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+  justify-items: center;
+}
+
+/* Krok 2 - 3 stĺpce */
+.mmf-step[data-step="2"] .mmf-event-grid {
+  grid-template-columns: repeat(3, 1fr);
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Skryjeme klasický radio button */
+.mmf-event-card input[type="radio"] {
+  display: none;
+}
+
+.mmf-event-card {
+  cursor: pointer;
+  text-align: center;
+}
+
+.mmf-event-circle {
+  width: 190px;
+  height: 190px;
+  background: #ffffff;
+  border: 3px solid #e0e0e0;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  margin: 0 auto;
+}
+
+.mmf-event-icon {
+  font-size: 55px;
+  margin-bottom: 12px;
+  color: #ff1493;
+}
+
+.mmf-event-title {
+  font-weight: 600;
+  font-size: 18px;
+  color: #ff1493;
+}
+
+/* Hover efekt */
+.mmf-event-circle:hover {
+  transform: translateY(-6px);
+  border-color: #ff69bc;
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+  color: #ffffff;
+}
+
+/* SELECTED STATE */
+.mmf-event-card input[type="radio"]:checked + .mmf-event-circle {
+  background: linear-gradient(135deg, #ff1493, #ff1493);
+  transform: scale(1.05);
+  box-shadow: 0 20px 40px rgba(255,79,163,0.4);
+}
+
+.mmf-event-card input[type="radio"]:checked + .mmf-event-circle .mmf-event-title,
+.mmf-event-card input[type="radio"]:checked + .mmf-event-circle .mmf-event-icon {
+  color: #ffffff;
+}
+
+/* Poznámka pod kartami */
+.mmf-duration-note {
+  font-size: 15px;
+  font-style: italic;
+  color: #000000;
+  text-align: center;
+  margin-top: 25px;
+  line-height: 1.6;
+}
+
+.mmf-duration-note strong {
+  color: #000000;
+  font-weight: 600;
+}
+
+/* =====================================
+   PACKAGES (KROK 3)
+===================================== */
+
+.mmf-packages-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.mmf-package-card {
+  cursor: pointer;
+  display: block;
+}
+
+.mmf-package-card input[type="radio"] {
+  display: none;
+}
+
+.mmf-package-box {
+  background: #ffffff;
+  border: 3px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 30px 20px;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  gap: 18px;
+}
+
+.mmf-package-icon {
+  font-size: 48px;
+  margin-bottom: 0;
+  color: #ff1493;
+}
+
+.mmf-package-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #333;
+  margin-bottom: 0;
+  line-height: 1.3;
+}
+
+.mmf-package-desc {
+  font-size: 16px;
+  color: #000000;
+  line-height: 1.6;
+  flex-grow: 0;
+}
+
+.mmf-package-note {
+  font-size: 14px;
+  color: #000000;
+  font-style: italic;
+  margin-top: 0;
+}
+
+/* FEATURED / RECOMMENDED package */
+.mmf-package-featured .mmf-package-box {
+  background: linear-gradient(135deg, #fff5fc, #ffffff);
+  border-color: #ff1493;
+  border-width: 4px;
+  transform: scale(1.05);
+  box-shadow: 0 8px 25px rgba(255, 20, 147, 0.2);
+}
+
+.mmf-package-featured .mmf-package-title {
+  color: #ff1493;
+  font-size: 22px;
+}
+
+.mmf-package-badge {
+  position: absolute;
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ff1493;
+  color: white;
+  padding: 5px 20px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Hover effect */
+.mmf-package-box:hover {
+  border-color: #ff69bc;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.mmf-package-featured .mmf-package-box:hover {
+  transform: scale(1.08) translateY(-3px);
+  box-shadow: 0 12px 35px rgba(255, 20, 147, 0.3);
+}
+
+/* Selected state */
+.mmf-package-card input[type="radio"]:checked + .mmf-package-box {
+  background: #ff1493;
+  border-color: #ff1493;
+  transform: scale(1.05);
+  box-shadow: 0 15px 40px rgba(255, 20, 147, 0.4);
+}
+
+.mmf-package-card input[type="radio"]:checked + .mmf-package-box .mmf-package-title,
+.mmf-package-card input[type="radio"]:checked + .mmf-package-box .mmf-package-desc,
+.mmf-package-card input[type="radio"]:checked + .mmf-package-box .mmf-package-note,
+.mmf-package-card input[type="radio"]:checked + .mmf-package-box .mmf-package-icon {
+  color: #ffffff;
+}
+
+.mmf-package-card input[type="radio"]:checked + .mmf-package-box .mmf-package-badge {
+  background: #ffffff;
+  color: #ff1493;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .mmf-packages-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .mmf-package-featured .mmf-package-box {
+    transform: scale(1);
+  }
+  
+  .mmf-package-featured .mmf-package-box:hover {
+    transform: scale(1.02);
+  }
+}
+
+/* =====================================
+   EXTENSIONS (KROK 4)
+===================================== */
+
+.mmf-extensions-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px 0;
+  align-items: stretch;
+}
+
+.mmf-extension-card {
+  cursor: pointer;
+  display: block;
+  height: 100%;
+}
+
+.mmf-extension-card input[type="checkbox"] {
+  display: none;
+}
+
+.mmf-extension-box {
+  background: #ffffff;
+  border: 3px solid #e0e0e0;
+  border-radius: 12px;
+  overflow: hidden;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.mmf-extension-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  display: block;
+  flex-shrink: 0;
+}
+
+.mmf-extension-content {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  flex-grow: 1;
+  justify-content: space-between;
+}
+
+.mmf-extension-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: #333;
+  line-height: 1.3;
+}
+
+.mmf-extension-price {
+  font-size: 22px;
+  font-weight: 700;
+  color: #ff1493;
+}
+
+.mmf-extension-desc {
+  font-size: 14px;
+  color: #000000;
+  line-height: 1.6;
+  flex-grow: 1;
+}
+
+.mmf-extension-note {
+  font-size: 13px;
+  color: #ff1493;
+  font-style: italic;
+  font-weight: 600;
+  margin-top: 0;
+}
+
+/* Hover effect */
+.mmf-extension-box:hover {
+  border-color: #ff69bc;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* Selected state - checkbox checked */
+.mmf-extension-card input[type="checkbox"]:checked + .mmf-extension-box {
+  background: #ff1493;
+  border-color: #ff1493;
+  transform: scale(1.02);
+  box-shadow: 0 15px 40px rgba(255, 20, 147, 0.4);
+}
+
+.mmf-extension-card input[type="checkbox"]:checked + .mmf-extension-box .mmf-extension-title,
+.mmf-extension-card input[type="checkbox"]:checked + .mmf-extension-box .mmf-extension-price,
+.mmf-extension-card input[type="checkbox"]:checked + .mmf-extension-box .mmf-extension-desc,
+.mmf-extension-card input[type="checkbox"]:checked + .mmf-extension-box .mmf-extension-note {
+  color: #ffffff;
+}
+
+/* Checkmark indicator */
+.mmf-extension-box::after {
+  content: '✓';
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 30px;
+  height: 30px;
+  background: #ff1493;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: bold;
+  opacity: 0;
+  transform: scale(0);
+  transition: all 0.3s ease;
+}
+
+.mmf-extension-card input[type="checkbox"]:checked + .mmf-extension-box::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .mmf-extensions-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+}
+
+/* =====================================
+   REGION MAP (KROK 5)
+===================================== */
+
+.mmf-region-map-container {
+  max-width: 600px;
+  margin: 30px auto;
+  padding: 20px;
+  background: #ffffff;
+  border-radius: 12px;
+}
+
+.mmf-region-map {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.mmf-region-path {
+  cursor: pointer;
+  transition: all 0.3s ease;
+  fill: #f2f2f2;
+  stroke: #999;
+  stroke-width: 1;
+}
+
+.mmf-region-path:hover {
+  fill: #ffb3a3;
+}
+
+.mmf-region-path.selected {
+  fill: #ff1493;
+}
+
+.mmf-region-path.selected:hover {
+  fill: #ff1493;
+}
+
+.mmf-region-selected {
+  margin-top: 20px;
+  text-align: center;
+  font-size: 20px;
+  color: #000000;
+}
+
+.mmf-region-selected strong {
+  color: #ff1493;
+  font-weight: 600;
+}
+
+/* TOOLTIP na mapy */
+.mmf-region-tooltip {
+  position: fixed;
+  background: #ffffff;
+  color: #ff1493;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 1000;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  opacity: 0;
+  transform: translateY(-5px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.mmf-region-tooltip.visible {
+  opacity: 1;
+  transform: translateY(-12px);
+}
+
+/* Responsive */
+@media (max-width: 1000px) {
+  .mmf-event-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 15px;
+  }
+}
+
+@media (max-width: 600px) {
+  .mmf-event-grid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+
+  .mmf-event-circle {
+    width: 130px;
+    height: 130px;
+  }
+}
+
+/* =====================================
+   CONTACT FORM (KROK 7)
+===================================== */
+
+.mmf-contact-form {
+  max-width: 700px;
+  margin: 30px auto;
+  padding: 30px;
+  background: #f9f9f9;
+  border-radius: 12px;
+}
+
+.mmf-form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.mmf-form-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.mmf-form-field label {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.mmf-required {
+  color: #ff1493;
+  font-weight: 700;
+}
+
+.mmf-form-field input[type="text"],
+.mmf-form-field input[type="email"],
+.mmf-form-field input[type="tel"],
+.mmf-form-field input[type="date"],
+.mmf-form-field textarea {
+  padding: 12px 16px;
+  font-size: 15px;
+  border: 2px solid #e0e0e0;
+  border-radius: 8px;
+  background: #ffffff;
+  transition: all 0.3s ease;
+  font-family: inherit;
+}
+
+.mmf-form-field input:focus,
+.mmf-form-field textarea:focus {
+  outline: none;
+  border-color: #ff1493;
+  box-shadow: 0 0 0 3px rgba(255, 20, 147, 0.1);
+}
+
+.mmf-form-field-highlighted {
+  margin-top: 10px;
+  padding: 20px;
+  background: linear-gradient(135deg, #fff5fc, #ffffff);
+  border: 2px solid #ff69bc;
+  border-radius: 12px;
+}
+
+.mmf-form-field-highlighted label {
+  color: #ff1493;
+  font-size: 16px;
+}
+
+.mmf-form-field-highlighted textarea {
+  border-color: #ffb3e6;
+  min-height: 120px;
+  resize: vertical;
+}
+
+.mmf-form-field-highlighted textarea:focus {
+  border-color: #ff1493;
+}
+
+.mmf-form-field textarea::placeholder,
+.mmf-form-field input::placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .mmf-form-row {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  
+  .mmf-contact-form {
+    padding: 20px;
+  }
+}
+
