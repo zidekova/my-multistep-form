@@ -5,8 +5,7 @@ $form_id = esc_attr($mmf_atts['id'] ?? 'mmf-form-1');
 $steps_total = 7;
 ?>
 
-<!-- Font Awesome -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
 
 <div id="<?php echo $form_id; ?>" class="mmf-container" role="region" aria-labelledby="<?php echo $form_id; ?>-title">
 
@@ -17,7 +16,11 @@ $steps_total = 7;
     </span>
   </div>
 
-  <form class="mmf-form" novalidate>
+  <form class="mmf-form" method="post" action="<?php echo esc_url( admin_url('admin-post.php') ); ?>" novalidate>
+    <?php // action + nonce for secure handling ?>
+    <input type="hidden" name="action" value="mmf_submit">
+    <?php wp_nonce_field('mmf_submit_action', 'mmf_nonce'); ?>
+    <input type="hidden" name="final_price" id="mmf-final-price" value="">
     <?php
     // KROK 1
     ?>
@@ -231,8 +234,7 @@ $steps_total = 7;
       <div class="mmf-region-selected">Vybraný kraj: <strong id="selected-region">Žiadny</strong></div>
       <input type="hidden" name="region" id="region-hidden" />
 
-      <p class="mmf-duration-note"><strong>Cena dopravy zohľadňuje nielen vzdialenosť, ale aj časovú a logistickú náročnosť nočného návratu po akcii.</strong></p>
-      <p class="mmf-duration-note">Z dôvodu bezpečného návratu po nočnej akcii môže byť pri vzdialenejších lokalitách súčasťou dohody aj ubytovanie zabezpečené objednávateľom.</p>
+      <p class="mmf-duration-note"><strong>Cena dopravy zohľadňuje nielen vzdialenosť, ale aj časovú a logistickú náročnosť nočného návratu po akcii.</strong><br>Z dôvodu bezpečného návratu po nočnej akcii môže byť pri vzdialenejších lokalitách súčasťou dohody aj ubytovanie zabezpečené objednávateľom.</p>
     </section>
 
     <?php
@@ -240,15 +242,20 @@ $steps_total = 7;
     ?>
     <section class="mmf-step" data-step="6" aria-label="<?php echo esc_attr(sprintf('%s 6 %s %d', __('Krok', 'my-multistep-form'), __('z', 'my-multistep-form'), $steps_total)); ?>">
       <h3>Porovnanie riešení pre vašu akciu</h3>
-      // TODO
+      <p class="mmf-pricing-subtitle">Ceny už zahŕňajú zvolený typ akcie, dĺžku programu, lokalitu a rozšírenia.<br>Vybraný balík je zvýraznený, zvolené rozšírenia sú započítané v cene.</p>
+      <div id="mmf-pricing-comparison" class="mmf-pricing-comparison">
+      <div id="mmf-pricing-results"></div>
+      </div>
     </section>
 
     <?php
     // KROK 7
     ?>
     <section class="mmf-step" data-step="7" aria-label="<?php echo esc_attr(sprintf('%s 7 %s %d', __('Krok', 'my-multistep-form'), __('z', 'my-multistep-form'), $steps_total)); ?>">
-      <h3>Predbežná rezervácia</h3>
-      
+      <h3>Chcete túto konfiguráciu nezáväzne rezervovať alebo preveriť dostupnosť termínu?</h3>
+      <p class="mmf-pricing-subtitle">Odoslaním konfigurácie mi príde kompletný prehľad vašich požiadaviek
+      a môžeme spolu doladiť detaily.</p>
+
       <div class="mmf-contact-form">
         
         <div class="mmf-form-row">
@@ -287,11 +294,52 @@ $steps_total = 7;
     <div class="mmf-nav">
       <button type="button" class="mmf-btn mmf-prev" data-action="prev" disabled><?php _e('Späť', 'my-multistep-form'); ?></button>
       <button type="button" class="mmf-btn mmf-next" data-action="next"><?php _e('Ďalej', 'my-multistep-form'); ?></button>
-      <button type="submit" class="mmf-btn mmf-submit" hidden><?php _e('Odoslať', 'my-multistep-form'); ?></button>
+      <button type="submit" class="mmf-btn mmf-submit" hidden><?php _e('Odoslať cenovú ponuku', 'my-multistep-form'); ?></button>
     </div>
 
     <?php // nonce pre budúci submit cez AJAX (zatiaľ nepoužijeme)
     // wp_nonce_field('mmf_submit', 'mmf_nonce'); ?>
 
   </form>
+<script type="text/javascript">
+  /* Pricing configuration - upravte hodnoty podľa PDF alebo vašich cien */
+  window.MMF_PRICING = {
+    base: 650,
+    eventType: {
+      'svadba': 50,
+      'firemna': 0,
+      'stuzkova': 50,
+      'oslava': 0
+    },
+    duration: {
+      'do-7-hodin': 0,
+      '8-9-hodin': 50,
+      '10-a-viac-hodin': 100
+    },
+    package: {
+      'cista-zabava': 0,
+      'atmosfera': 70,
+      'wow-efekt': 300
+    },
+    extensions: {
+      'prvy-tanec-oblaky': 150,
+      'vecerny-wow-moment': 240,
+      'svadobny-ceremonial': 150
+    },
+    region: {
+      'Žilinský': 0,
+      'Trenčiansky': 0,
+      'Banskobystrický': 60,
+      'Nitriansky': 60,
+      'Trnavský': 60,
+      'Prešovský': 80,
+      'Košický': 80,
+      'Bratislavský': 100
+    },
+    // mapovanie rozšírení ktoré sú zahrnuté v konkrétnych balíkoch
+    includedExtensions: {
+      'wow-efekt': ['vecerny-wow-moment']
+    }
+  };
+</script>
 </div>

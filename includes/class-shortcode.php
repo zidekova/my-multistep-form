@@ -7,6 +7,10 @@ class MMF_Shortcode {
     public static function render($atts = []) {
         // Načítaj CSS/JS len ak sa shortcode zobrazuje
         wp_enqueue_style('mmf-css');
+        // enqueue fontawesome too (registered in main plugin file)
+        if (wp_style_is('mmf-fa', 'registered')) {
+            wp_enqueue_style('mmf-fa');
+        }
         wp_enqueue_script('mmf-js');
 
         // Možnosť poslať atribúty (napr. farba, theme, ...)
