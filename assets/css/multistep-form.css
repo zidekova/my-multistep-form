@@ -2,6 +2,19 @@
    MY MULTISTEP FORM - COMPLETE STYLE
 ===================================== */
 
+/* Ensure Font Awesome icons load properly */
+.fas, .far, .fab, .fa {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Pro", "Font Awesome 5 Free", "FontAwesome" !important;
+  font-weight: 900;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-font-smoothing: antialiased;
+  display: inline-block;
+  font-style: normal;
+  font-variant: normal;
+  text-rendering: auto;
+  line-height: 1;
+}
+
 .mmf-container {
   max-width: 90%;
   width: 100%;
@@ -18,6 +31,31 @@
   margin-bottom: 30px;
   font-size: 28px;
   font-weight: 700;
+}
+
+/* =====================================
+   MESSAGES (SUCCESS/ERROR)
+===================================== */
+
+.mmf-message {
+  padding: 16px 20px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.mmf-message-success {
+  background: #d4edda;
+  color: #155724;
+  border: 2px solid #c3e6cb;
+}
+
+.mmf-message-error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 2px solid #f5c6cb;
 }
 
 /* =====================================
@@ -460,17 +498,18 @@
 
 .mmf-package-badge {
   position: absolute;
-  top: -12px;
-  left: 50%;
-  transform: translateX(-50%);
+  top: 15px;
+  right: 15px;
+  left: auto;
+  transform: none;
   background: #ff1493;
   color: white;
-  padding: 5px 20px;
-  border-radius: 20px;
-  font-size: 13px;
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.3px;
 }
 
 /* Hover effect */
@@ -488,7 +527,7 @@
   text-align: center;
   color: #000000;
   margin-top: 6px;
-  margin-bottom: 18px;
+  margin-bottom: 30px;
   font-size: 16px;
   font-style: italic;
 }
@@ -525,10 +564,66 @@
 }
 
 .mmf-pricing-cards .mmf-package-box {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   text-align: center;
   min-height: 280px;
   padding: 30px 20px;
+}
+
+.mmf-pricing-cards .mmf-package-icon {
+  margin-bottom: 8px;
+}
+
+.mmf-pricing-cards .mmf-package-title {
+  min-height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.mmf-pricing-cards .mmf-package-badge {
+  font-size: 12px;
+  padding: 3px 10px;
+  top: -15px;
+  left: 50%;
+  right: auto;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  z-index: 2;
+}
+
+.mmf-pricing-checklist {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  width: 100%;
+  text-align: left;
+  flex: 1;
+  border-top: 1px solid #f0d6e7;
+  padding-top: 14px;
+}
+
+.mmf-pricing-checklist li {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  font-size: 16px;
+  font-weight: 400;
+  color: #000000;
+  line-height: 1.4;
+  margin-bottom: 6px;
+}
+
+.mmf-pricing-checklist li:last-child {
+  margin-bottom: 0;
+}
+
+.mmf-check-icon {
+  color: #ff1493;
+  margin-top: 2px;
+  font-size: 12px;
 }
 
 /* Make selected package in comparison fully pink like step 3 */
@@ -543,6 +638,16 @@
 .mmf-pricing-cards .mmf-package-box.mmf-selected .mmf-package-icon,
 .mmf-pricing-cards .mmf-package-box.mmf-selected .mmf-pricing-amount {
   color: #ffffff;
+}
+.mmf-pricing-cards .mmf-package-box.mmf-selected .mmf-pricing-checklist li {
+  color: #ffffff;
+}
+.mmf-pricing-cards .mmf-package-box.mmf-selected .mmf-check-icon {
+  color: #ffffff;
+}
+.mmf-pricing-cards .mmf-package-box.mmf-selected .mmf-pricing-checklist,
+.mmf-pricing-cards .mmf-package-box.mmf-selected .mmf-pricing-amount {
+  border-top-color: rgba(255, 255, 255, 0.35);
 }
 .mmf-pricing-cards .mmf-package-box.mmf-selected .mmf-package-badge {
   background: #ffffff;
@@ -571,17 +676,15 @@
   color: #222;
 }
 
-.mmf-pricing-benefits {
-  font-size: 14px;
-  color: #333;
-  line-height: 1.4;
-}
-
 .mmf-pricing-amount {
   font-size: 24px;
   font-weight: 800;
   color: #ff1493;
-  margin-top: 6px;
+  margin-top: 16px;
+  border-top: 1px solid #f0d6e7;
+  padding-top: 12px;
+  width: 100%;
+  text-align: center;
 }
 
 .mmf-pricing-note {
@@ -617,8 +720,10 @@
 }
 
 .mmf-package-featured .mmf-package-box:hover {
+  background: #ffffff;
+  border-color: #ff69bc;
   transform: scale(1.08) translateY(-3px);
-  box-shadow: 0 12px 35px rgba(255, 20, 147, 0.3);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
 }
 
 /* Selected state */
@@ -992,3 +1097,71 @@
   }
 }
 
+/* =====================================
+   ERROR NOTIFICATION STYLES
+===================================== */
+
+.mmf-message.mmf-message-error {
+  background: #f8d7da;
+  color: #721c24;
+  border: 2px solid #f5c6cb;
+  padding: 16px 45px 16px 20px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  position: relative;
+  animation: mmf-slideDown 0.3s ease-out;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.mmf-error-close {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 24px;
+  line-height: 1;
+  opacity: 0.6;
+  transition: opacity 0.2s ease;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.1);
+  color: #721c24;
+}
+
+.mmf-error-close:hover {
+  opacity: 1;
+  background: rgba(0,0,0,0.2);
+}
+
+@keyframes mmf-slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Pre existujúce mmf-message triedy zachovávame */
+.mmf-message-success {
+  background: #d4edda;
+  color: #155724;
+  border: 2px solid #c3e6cb;
+  padding: 16px 20px;
+  border-radius: 10px;
+  margin-bottom: 25px;
+  font-size: 15px;
+  font-weight: 600;
+  text-align: center;
+  position: relative;
+}

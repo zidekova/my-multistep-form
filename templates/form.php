@@ -5,9 +5,16 @@ $form_id = esc_attr($mmf_atts['id'] ?? 'mmf-form-1');
 $steps_total = 7;
 ?>
 
-
-
 <div id="<?php echo $form_id; ?>" class="mmf-container" role="region" aria-labelledby="<?php echo $form_id; ?>-title">
+
+  <?php
+  // Display success message
+  if (isset($_GET['mmf_sent']) && $_GET['mmf_sent'] == '1') {
+    echo '<div class="mmf-message mmf-message-success">✓ Vaša predbežná rezervácia bola úspešne odoslaná! Čoskoro vás budem kontaktovať.</div>';
+  }
+  
+  // CHYBOVÉ OKIENKO SME ÚPLNE ODSTRÁNILI - používame len alert z JavaScriptu
+  ?>
 
   <!-- Live text pre screenreaders -->
   <div class="screen-reader-text" aria-live="polite" aria-atomic="true">
@@ -20,15 +27,13 @@ $steps_total = 7;
     <?php // action + nonce for secure handling ?>
     <input type="hidden" name="action" value="mmf_submit">
     <?php wp_nonce_field('mmf_submit_action', 'mmf_nonce'); ?>
+    <input type="hidden" name="mmf_return_url" id="mmf-return-url" value="">
     <input type="hidden" name="final_price" id="mmf-final-price" value="">
-    <?php
-    // KROK 1
-    ?>
+    
+    <!-- KROK 1 -->
     <section class="mmf-step is-active" data-step="1">
       <h3>Vyberte si typ akcie</h3>
-
       <div class="mmf-event-grid">
-
         <label class="mmf-event-card">
           <input type="radio" name="event_type" value="svadba" required>
           <span class="mmf-event-circle">
@@ -36,7 +41,6 @@ $steps_total = 7;
             <span class="mmf-event-title">Svadba</span>
           </span>
         </label>
-
         <label class="mmf-event-card">
           <input type="radio" name="event_type" value="firemna">
           <span class="mmf-event-circle">
@@ -44,7 +48,6 @@ $steps_total = 7;
             <span class="mmf-event-title">Firemná akcia</span>
           </span>
         </label>
-
         <label class="mmf-event-card">
           <input type="radio" name="event_type" value="stuzkova">
           <span class="mmf-event-circle">
@@ -52,7 +55,6 @@ $steps_total = 7;
             <span class="mmf-event-title">Stužková</span>
           </span>
         </label>
-
         <label class="mmf-event-card">
           <input type="radio" name="event_type" value="oslava">
           <span class="mmf-event-circle">
@@ -60,102 +62,71 @@ $steps_total = 7;
             <span class="mmf-event-title">Oslava</span>
           </span>
         </label>
-
       </div>
     </section>
 
-    <?php
-    // KROK 2
-    ?>
-    <section class="mmf-step" data-step="2" aria-label="<?php echo esc_attr(sprintf('%s 2 %s %d', __('Krok', 'my-multistep-form'), __('z', 'my-multistep-form'), $steps_total)); ?>">
+    <!-- KROK 2 -->
+    <section class="mmf-step" data-step="2">
       <h3>Ako dlho chcete so mnou na akcii rátať?</h3>
-
       <div class="mmf-event-grid">
-
         <label class="mmf-event-card">
           <input type="radio" name="duration" value="do-7-hodin" required>
           <span class="mmf-event-circle">
             <span class="mmf-event-title">Do 7 hodín</span>
           </span>
         </label>
-
         <label class="mmf-event-card">
           <input type="radio" name="duration" value="8-9-hodin">
           <span class="mmf-event-circle">
             <span class="mmf-event-title">8-9 hodín</span>
           </span>
         </label>
-
         <label class="mmf-event-card">
           <input type="radio" name="duration" value="10-a-viac-hodin">
           <span class="mmf-event-circle">
             <span class="mmf-event-title">10 a viac hodín</span>
           </span>
         </label>
-
       </div>
-
       <p class="mmf-duration-note">Program je štandardne plánovaný najneskôr do <strong>04:00</strong>. Pokračovanie po tomto čase je možné po dohode za príplatok <strong>50 € za každú ďalšiu začatú hodinu</strong>.</p>
     </section>
 
-    <?php
-    // KROK 3
-    ?>
-    <section class="mmf-step" data-step="3" aria-label="<?php echo esc_attr(sprintf('%s 3 %s %d', __('Krok', 'my-multistep-form'), __('z', 'my-multistep-form'), $steps_total)); ?>">
+    <!-- KROK 3 -->
+    <section class="mmf-step" data-step="3">
       <h3>Vyberte si balíček</h3>
-      
       <div class="mmf-packages-grid">
-        
-        <!-- Balíček 1: Čistá zábava -->
         <label class="mmf-package-card">
           <input type="radio" name="package" value="cista-zabava" required>
           <div class="mmf-package-box">
             <i class="mmf-package-icon fas fa-glass-cheers"></i>
             <div class="mmf-package-title">Čistá zábava</div>
-            <div class="mmf-package-desc">
-              DJ, moderovanie, kvalitné ozvučenie a základná svetelná atmosféra.
-            </div>
+            <div class="mmf-package-desc">DJ, moderovanie, kvalitné ozvučenie a základná svetelná atmosféra.</div>
           </div>
         </label>
-        
-        <!-- Balíček 2: Atmosféra (RECOMMENDED) -->
         <label class="mmf-package-card mmf-package-featured">
-          <input type="radio" name="package" value="atmosfera" required>
+          <input type="radio" name="package" value="atmosfera">
           <div class="mmf-package-box">
-            <span class="mmf-package-badge">Odporúčané</span>
             <i class="mmf-package-icon fas fa-star"></i>
             <div class="mmf-package-title">Atmosféra, ktorú si hostia zapamätajú</div>
-            <div class="mmf-package-desc">
-              Rozšírené osvetlenie, nasvietenie sály a práca s atmosférou večera.
-            </div>
+            <div class="mmf-package-desc">Rozšírené osvetlenie, nasvietenie sály a práca s atmosférou večera.</div>
             <div class="mmf-package-note">(najčastejšia voľba)</div>
           </div>
         </label>
-        
-        <!-- Balíček 3: WOW efekt -->
         <label class="mmf-package-card">
-          <input type="radio" name="package" value="wow-efekt" required>
+          <input type="radio" name="package" value="wow-efekt">
           <div class="mmf-package-box">
             <i class="mmf-package-icon fas fa-crown"></i>
             <div class="mmf-package-title">Eventový WOW efekt</div>
-            <div class="mmf-package-desc">
-              Plnohodnotná svetelná show s profesionálnym osvetľovačom a výrazným WOW momentom v cene.
-            </div>
+            <div class="mmf-package-desc">Plnohodnotná svetelná show s profesionálnym osvetľovačom a výrazným WOW momentom v cene.</div>
           </div>
         </label>
-        
       </div>
     </section>
 
-    <?php
-    // KROK 4
-    ?>
-    <section class="mmf-step" data-step="4" aria-label="<?php echo esc_attr(sprintf('%s 4 %s %d', __('Krok', 'my-multistep-form'), __('z', 'my-multistep-form'), $steps_total)); ?>">
+    <!-- KROK 4 -->
+    <section class="mmf-step" data-step="4">
       <h3>Rozšírenia</h3>
-      
       <div class="mmf-extensions-grid">
-        
-        <!-- Rozšírenie 1: Prvý tanec v oblakoch -->
         <label class="mmf-extension-card">
           <input type="checkbox" name="extensions[]" value="prvy-tanec-oblaky">
           <div class="mmf-extension-box">
@@ -163,14 +134,10 @@ $steps_total = 7;
             <div class="mmf-extension-content">
               <div class="mmf-extension-title">Prvý tanec v oblakoch</div>
               <div class="mmf-extension-price">+150 €</div>
-              <div class="mmf-extension-desc">
-                Plazivý dym počas prvého tanca alebo iného kľúčového momentu. Silný vizuálny efekt pre hostí, fotky aj video.
-              </div>
+              <div class="mmf-extension-desc">Plazivý dym počas prvého tanca alebo iného kľúčového momentu.</div>
             </div>
           </div>
         </label>
-        
-        <!-- Rozšírenie 2: Večerný WOW moment -->
         <label class="mmf-extension-card">
           <input type="checkbox" name="extensions[]" value="vecerny-wow-moment">
           <div class="mmf-extension-box">
@@ -178,15 +145,11 @@ $steps_total = 7;
             <div class="mmf-extension-content">
               <div class="mmf-extension-title">Večerný WOW moment</div>
               <div class="mmf-extension-price">+240 €</div>
-              <div class="mmf-extension-desc">
-                Jeden výrazný večerný moment kombinujúci plazivý dym a interiérové iskry, presne načasovaný podľa hudby.
-              </div>
+              <div class="mmf-extension-desc">Výrazný večerný moment kombinujúci plazivý dym a interiérové iskry.</div>
               <div class="mmf-extension-note">✔ Zahrnuté v balíku Eventový WOW efekt</div>
             </div>
           </div>
         </label>
-        
-        <!-- Rozšírenie 3: Svadobný ceremoniál -->
         <label class="mmf-extension-card">
           <input type="checkbox" name="extensions[]" value="svadobny-ceremonial">
           <div class="mmf-extension-box">
@@ -194,19 +157,14 @@ $steps_total = 7;
             <div class="mmf-extension-content">
               <div class="mmf-extension-title">Svadobný ceremoniál bez stresu</div>
               <div class="mmf-extension-price">+150 €</div>
-              <div class="mmf-extension-desc">
-                Kompletné ozvučenie svadobného obradu – mikrofóny, hudobné vstupy a technická príprava vopred.
-              </div>
+              <div class="mmf-extension-desc">Kompletné ozvučenie svadobného obradu – mikrofóny, hudobné vstupy a technická príprava vopred.</div>
             </div>
           </div>
         </label>
-        
       </div>
     </section>
 
-    <?php
-    // KROK 5
-    ?>
+    <!-- KROK 5 -->
     <section class="mmf-step" data-step="5" aria-label="<?php echo esc_attr(sprintf('%s 5 %s %d', __('Krok', 'my-multistep-form'), __('z', 'my-multistep-form'), $steps_total)); ?>">
       <h3>Vyberte si lokalitu</h3>
       
@@ -237,56 +195,45 @@ $steps_total = 7;
       <p class="mmf-duration-note"><strong>Cena dopravy zohľadňuje nielen vzdialenosť, ale aj časovú a logistickú náročnosť nočného návratu po akcii.</strong><br>Z dôvodu bezpečného návratu po nočnej akcii môže byť pri vzdialenejších lokalitách súčasťou dohody aj ubytovanie zabezpečené objednávateľom.</p>
     </section>
 
-    <?php
-    // KROK 6
-    ?>
-    <section class="mmf-step" data-step="6" aria-label="<?php echo esc_attr(sprintf('%s 6 %s %d', __('Krok', 'my-multistep-form'), __('z', 'my-multistep-form'), $steps_total)); ?>">
+    <!-- KROK 6 -->
+    <section class="mmf-step" data-step="6">
       <h3>Porovnanie riešení pre vašu akciu</h3>
       <p class="mmf-pricing-subtitle">Ceny už zahŕňajú zvolený typ akcie, dĺžku programu, lokalitu a rozšírenia.<br>Vybraný balík je zvýraznený, zvolené rozšírenia sú započítané v cene.</p>
       <div id="mmf-pricing-comparison" class="mmf-pricing-comparison">
-      <div id="mmf-pricing-results"></div>
+        <div id="mmf-pricing-results"></div>
       </div>
     </section>
 
-    <?php
-    // KROK 7
-    ?>
-    <section class="mmf-step" data-step="7" aria-label="<?php echo esc_attr(sprintf('%s 7 %s %d', __('Krok', 'my-multistep-form'), __('z', 'my-multistep-form'), $steps_total)); ?>">
+    <!-- KROK 7 -->
+    <section class="mmf-step" data-step="7">
       <h3>Chcete túto konfiguráciu nezáväzne rezervovať alebo preveriť dostupnosť termínu?</h3>
-      <p class="mmf-pricing-subtitle">Odoslaním konfigurácie mi príde kompletný prehľad vašich požiadaviek
-      a môžeme spolu doladiť detaily.</p>
+      <p class="mmf-pricing-subtitle">Odoslaním konfigurácie mi príde kompletný prehľad vašich požiadaviek a môžeme spolu doladiť detaily.</p>
 
       <div class="mmf-contact-form">
-        
         <div class="mmf-form-row">
           <div class="mmf-form-field mmf-form-field-required">
             <label for="contact_name">Meno <span class="mmf-required">*</span></label>
             <input type="text" id="contact_name" name="contact_name" required>
           </div>
-          
           <div class="mmf-form-field mmf-form-field-required">
             <label for="contact_email">Email <span class="mmf-required">*</span></label>
             <input type="email" id="contact_email" name="contact_email" required>
           </div>
         </div>
-        
         <div class="mmf-form-row">
           <div class="mmf-form-field mmf-form-field-required">
             <label for="contact_phone">Telefón <span class="mmf-required">*</span></label>
-            <input type="tel" id="contact_phone" name="contact_phone" required>
+            <input type="tel" id="contact_phone" name="contact_phone" required pattern="[0-9+\s\-()]{9,}" title="Zadajte platné telefónne číslo (minimálne 9 číslic)">
           </div>
-          
           <div class="mmf-form-field mmf-form-field-required">
             <label for="event_date">Dátum akcie <span class="mmf-required">*</span></label>
-            <input type="date" id="event_date" name="event_date" required>
+            <input type="date" id="event_date" name="event_date" required min="<?php echo date('Y-m-d'); ?>">
           </div>
         </div>
-        
         <div class="mmf-form-field mmf-form-field-highlighted">
           <label for="contact_message">Správa / poznámka</label>
           <textarea id="contact_message" name="contact_message" rows="6" placeholder="Máte špeciálne požiadavky alebo otázky?&#10;Napíšte mi správu a detaily spolu doladíme."></textarea>
         </div>
-        
       </div>
     </section>
 
@@ -296,50 +243,45 @@ $steps_total = 7;
       <button type="button" class="mmf-btn mmf-next" data-action="next"><?php _e('Ďalej', 'my-multistep-form'); ?></button>
       <button type="submit" class="mmf-btn mmf-submit" hidden><?php _e('Odoslať cenovú ponuku', 'my-multistep-form'); ?></button>
     </div>
-
-    <?php // nonce pre budúci submit cez AJAX (zatiaľ nepoužijeme)
-    // wp_nonce_field('mmf_submit', 'mmf_nonce'); ?>
-
   </form>
-<script type="text/javascript">
-  /* Pricing configuration - upravte hodnoty podľa PDF alebo vašich cien */
-  window.MMF_PRICING = {
-    base: 650,
-    eventType: {
-      'svadba': 50,
-      'firemna': 0,
-      'stuzkova': 50,
-      'oslava': 0
-    },
-    duration: {
-      'do-7-hodin': 0,
-      '8-9-hodin': 50,
-      '10-a-viac-hodin': 100
-    },
-    package: {
-      'cista-zabava': 0,
-      'atmosfera': 70,
-      'wow-efekt': 300
-    },
-    extensions: {
-      'prvy-tanec-oblaky': 150,
-      'vecerny-wow-moment': 240,
-      'svadobny-ceremonial': 150
-    },
-    region: {
-      'Žilinský': 0,
-      'Trenčiansky': 0,
-      'Banskobystrický': 60,
-      'Nitriansky': 60,
-      'Trnavský': 60,
-      'Prešovský': 80,
-      'Košický': 80,
-      'Bratislavský': 100
-    },
-    // mapovanie rozšírení ktoré sú zahrnuté v konkrétnych balíkoch
-    includedExtensions: {
-      'wow-efekt': ['vecerny-wow-moment']
-    }
-  };
-</script>
+
+  <script type="text/javascript">
+    window.MMF_PRICING = {
+      base: 650,
+      eventType: {
+        'svadba': 50,
+        'firemna': 0,
+        'stuzkova': 50,
+        'oslava': 0
+      },
+      duration: {
+        'do-7-hodin': 0,
+        '8-9-hodin': 50,
+        '10-a-viac-hodin': 100
+      },
+      package: {
+        'cista-zabava': 0,
+        'atmosfera': 70,
+        'wow-efekt': 700
+      },
+      extensions: {
+        'prvy-tanec-oblaky': 150,
+        'vecerny-wow-moment': 240,
+        'svadobny-ceremonial': 150
+      },
+      region: {
+        'Žilinský': 0,
+        'Trenčiansky': 40,
+        'Banskobystrický': 60,
+        'Nitriansky': 60,
+        'Trnavský': 60,
+        'Prešovský': 80,
+        'Košický': 80,
+        'Bratislavský': 100
+      },
+      includedExtensions: {
+        'wow-efekt': ['vecerny-wow-moment']
+      }
+    };
+  </script>
 </div>
